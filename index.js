@@ -6,7 +6,7 @@ app.use(bodyParser.json());
 
 // Verify webhook
 app.get("/webhook", (req, res) => {
-  const VERIFY_TOKEN = "EAAS8CVvZC2HcBOzZAfZBKCiLTwJ0wwxG5C6TbOBIUbRXhINKtPt5ICdYppGXJEC3N2y9wZChKM1kQhL9Qj43dlMZBZC99e1ULrzGvKLiPjfuZBftolzpMPQcLJlcslGgWoGI2rQ8dZByApZCxEM8rvpEw6ZBD6pL3K6uPHjJapxZBRBxSa2OXy4KxzKieWyz1CsPuvvTwwcHALZAF98YW9MZD";
+  const VERIFY_TOKEN = EAAS8CVvZC2HcBOzZAfZBKCiLTwJ0wwxG5C6TbOBIUbRXhINKtPt5ICdYppGXJEC3N2y9wZChKM1kQhL9Qj43dlMZBZC99e1ULrzGvKLiPjfuZBftolzpMPQcLJlcslGgWoGI2rQ8dZByApZCxEM8rvpEw6ZBD6pL3K6uPHjJapxZBRBxSa2OXy4KxzKieWyz1CsPuvvTwwcHALZAF98YW9MZD;
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
@@ -63,7 +63,7 @@ const sendMessageToChatGPT = async (message, senderId) => {
 };
 
 const sendMessageToMessenger = (senderId, message) => {
-  const PAGE_ACCESS_TOKEN = "your_page_access_token";
+  const PAGE_ACCESS_TOKEN = your_page_access_token;
 
   fetch(`https://graph.facebook.com/v11.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
     method: "POST",
