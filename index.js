@@ -56,7 +56,7 @@ const sendMessageToChatGPT = async (message, senderId) => {
       Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo", // or "gpt-4" if you are using that model
+      model: "gpt-4o-mini", // or "gpt-4" if you are using that model
       messages: [{ role: "user", content: message }],
     }),
   });
