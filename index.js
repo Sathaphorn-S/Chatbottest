@@ -1,12 +1,18 @@
+require('dotenv').config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
 app.use(bodyParser.json());
 
+// Get values from environment variables
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const PAGE_ACCESS_TOKEN = process.env.FACEBOOK_PAGE_ACCESS_TOKEN;
+
 // Verify webhook
 app.get("/webhook", (req, res) => {
-  const VERIFY_TOKEN = EAAS8CVvZC2HcBOzZAfZBKCiLTwJ0wwxG5C6TbOBIUbRXhINKtPt5ICdYppGXJEC3N2y9wZChKM1kQhL9Qj43dlMZBZC99e1ULrzGvKLiPjfuZBftolzpMPQcLJlcslGgWoGI2rQ8dZByApZCxEM8rvpEw6ZBD6pL3K6uPHjJapxZBRBxSa2OXy4KxzKieWyz1CsPuvvTwwcHALZAF98YW9MZD;
   const mode = req.query["hub.mode"];
   const token = req.query["hub.verify_token"];
   const challenge = req.query["hub.challenge"];
@@ -47,10 +53,10 @@ const sendMessageToChatGPT = async (message, senderId) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer your_openai_api_key`,
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo",
+      model: "gpt-3.5-turbo", // or "gpt-4" if you are using that model
       messages: [{ role: "user", content: message }],
     }),
   });
@@ -63,8 +69,6 @@ const sendMessageToChatGPT = async (message, senderId) => {
 };
 
 const sendMessageToMessenger = (senderId, message) => {
-  const PAGE_ACCESS_TOKEN = your_page_access_token;
-
   fetch(`https://graph.facebook.com/v11.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -75,5 +79,5 @@ const sendMessageToMessenger = (senderId, message) => {
   });
 };
 
+// Export the app for Vercel
 module.exports = app;
-
